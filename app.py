@@ -17,21 +17,23 @@ def home():
 def about():
     if request.method == 'POST':
         data = request.get_json(force=True)
-        success = process_about_form(data)  # Pass data directly
+        success = process_about_form(data)
         return {'success': success}, 201
     return render_template('about.html')
 
 @app.route('/contact', methods=['POST'])
 def contact():
     data = request.get_json(force=True)
-    process_contact_form(data)  # Pass data directly
+    process_contact_form(data)
     return {'submitted': True}, 202
 
 @app.route('/newfeature', methods=['GET'])
 def new_feature():
-    # Add new feature: Display a welcome message with user customization
-    user_name = request.args.get('user')  # Get user name from URL query
-    welcome_message = f"Welcome, {user_name or 'Guest'}"
+    user_name = request.args.get('user')
+    if user_name:
+        welcome_message = f"Hello, {user_name}! This is your personalized page."
+    else:
+        welcome_message = "Welcome to our website!"
     return {'welcome_message': welcome_message}
 
 @app.route('/success', methods=['GET'])
@@ -39,14 +41,11 @@ def success():
     return render_template('success.html')
 
 def send_email(email, message):
-    # Efficiently send email using threading
     import smtplib
-    from threading import Thread
-    thread = Thread(target=lambda: smtplib.SMTP('smtp.example.com', 587).sendmail('your_email@example.com', email, message))
-    thread.start()
+    smtplib.SMTP('smtp.example.com', 587).sendmail('your_email@example.com', email, message)
 
 def process_about_form(form_data):
-    # Efficient processing with improved logic
+    # Efficient processing logic here
     return True
 
 def process_contact_form(form_data):
