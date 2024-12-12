@@ -38,3 +38,13 @@ Here's a concise description of the updates:
 These changes introduce a contact page and enhance the application's accessibility and usability.
 
 END:3
+
+START:4
+
+I have updated the contact page to include an HTML form. Users can now submit their name, email, and messages through this form. The page uses the `<form>` element to create an interactive way for users to input their details. 
+
+This enhancement not only improves the user experience by offering a direct method of interaction but also makes the website more engaging and functional. Users can quickly and conveniently reach out by submitting the form. 
+
+Additionally, I have also added functionality to handle both GET and POST requests. The form submission is simulated with a simple message upon successful submission.
+
+END:4

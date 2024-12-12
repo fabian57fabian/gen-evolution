@@ -3,10 +3,29 @@ from flask import Flask
 
 app = Flask(__name__)
 
-# New feature: Contact page
-@app.route('/contact')
+# New feature: Contact page with a form
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
-    return '<html><body><h1>Contact Us</h1><p>Contact details: info@example.com</p></body></html>'
+    if app.request.method == 'POST':
+        # Process the form data here
+        return 'Form submitted successfully!'
+    else:
+        return '''
+            <html>
+                <body>
+                    <h1>Contact Us</h1>
+                    <form method="POST">
+                        <label for="name">Name:</label><br>
+                        <input type="text" id="name" name="name"><br>
+                        <label for="email">Email:</label><br>
+                        <input type="email" id="email" name="email"><br>
+                        <label for="message">Message:</label><br>
+                        <textarea id="message" name="message"></textarea><br>
+                        <input type="submit" value="Submit">
+                    </form>
+                </body>
+            </html>
+        '''
 
 @app.route('/')
 def hello():
