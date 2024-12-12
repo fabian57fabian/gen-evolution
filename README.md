@@ -42,3 +42,16 @@ I have updated the code to include two new improvements:
 These changes make the script more versatile and user-friendly, allowing for different ways of interacting with the application and providing clearer feedback on the success or failure of the requests.
 
 END:3
+
+START:4
+
+I have updated the provided Python script to include error handling and improve the efficiency of the `/greet` endpoints. 
+
+1. Changed the return values to be in JSON format, using the `jsonify` function, which enhances the clarity and structure of the responses. This way, the client can easily interpret the success or error messages. 
+2. Instead of using `request.form['name']` for the POST method, I utilized `request.get_json()` to handle the JSON data sent in the request body. This method extracts the JSON payload from the request, allowing for more robust and flexible data extraction. It can handle more complex JSON structures if needed. 
+3. I added a check to ensure that the name parameter is present in the URL query for the GET method. If it's missing, the endpoint returns a 400 Bad Request error with an appropriate error message. 
+4. For the POST method, I checked if the 'name' field is present in the JSON payload. If it's not there, again, it returns a 400 error with a relevant error message. 
+
+These changes make the script more robust and user-friendly, providing clearer feedback to the client and ensuring that the necessary parameters are present in the requests.
+
+END:4
