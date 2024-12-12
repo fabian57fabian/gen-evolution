@@ -1,0 +1,5 @@
+{
+  "llm": "cohere",
+  "model": "",
+  "temperature": 0.5
+}

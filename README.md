@@ -23,10 +23,6 @@ yes.
 - create a new branch and watch
 - stop the last running workflow to stop
 
-## How it's going
+## How it's going (auto updated)
 
-START:1
-
-First app.py Flask environment
-
-END:1
+Evolution starts in separate branches based on json config file, check them out!
