@@ -12,13 +12,13 @@ def home():
         if not all([name, email, message]):
             return {'error': 'All fields are required.', 'success': False}, 400
         send_email(email, message)
-        return {'message': f'Submitted: Name-{name}, Email-{email}, Message-{message}', 'success': True}, 200
+        return redirect('/success')
     return render_template('home.html')
 
 @app.route('/about', methods=['POST'])
 def about():
     data = request.json
-    keys = ['key1', 'key2']  # Define the required keys
+    keys = ['key1', 'key2']
     for key in keys:
         if key not in data:
             return {'error': f'Missing {key} key.', 'success': False}, 400
@@ -37,11 +37,14 @@ def contact():
         return {'error': f'Missing fields: {", ".join(missing_fields)}', 'submitted': False}, 400
     
     for field in required_fields:
-        if not data[field]:
+        if not data.get(field):
             return {'error': f'Please fill in the {field} field.', 'submitted': False}, 400
     
     success = validate_data(data)
-    return {'submitted': success}, 202
+    if success:
+        return {'submitted': True}, 202
+    else:
+        return {'submitted': False}, 400
 
 @app.route('/newfeature', methods=['GET'])
 def new_feature():

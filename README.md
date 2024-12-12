@@ -267,3 +267,14 @@ These updates enhance the web application's usability, efficiency, and maintaina
 ```
 
 END:20
+
+START:21
+
+```
+- The `/` route now redirects to the `/success` route after successful form submission instead of returning a JSON response. This improves user experience by showing a success message from a dedicated template.
+- The `/contact` route has been updated to use the `redirect()` function instead of returning a JSON response for successful form submission. It now redirects to the `/success` route.
+- Removed redundant `submitted` keys from the JSON responses of the `/contact` and `/about` routes, streamlining the data structure.
+- The `/newfeature` route continues to return a JSON response with a user-customized message, maintaining the existing functionality.
+```
+
+END:21
