@@ -5,9 +5,9 @@ from .AbstractLLM import AbstractLLM
 
 
 class LLMType(Enum):
-    gpt = 0,
-    cohere = 1,
-    groq = 2
+    gpt = "gpt",
+    cohere = "cohere",
+    groq = "groq"
 
 
 class LLMFactory:
@@ -31,7 +31,7 @@ class LLMFactory:
     def __parse_enum(self, value: str or LLMType) -> LLMType:
         if isinstance(value, str):
             try:
-                return LLMType(value)
+                return LLMType[value]
             except ValueError:
                 raise ValueError(f"Invalid LLMType value: {value}")
         elif isinstance(value, LLMType):

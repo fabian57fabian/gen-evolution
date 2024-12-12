@@ -1,4 +1,5 @@
 import json
+import shutil
 
 
 def read_file(fn: str) -> str:
@@ -30,3 +31,7 @@ def load_config(path) -> dict:
 def save_config(path: str, params: dict) -> None:
     with open(path, "w") as f:
         f.write(json.dumps(params, indent=2))
+
+
+def copy_files(src: str, dest: str) -> None:
+    shutil.copy2(src, dest)
