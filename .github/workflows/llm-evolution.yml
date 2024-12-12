@@ -10,6 +10,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
 
       - name: Cache Python Dependencies
         uses: actions/cache@v3
