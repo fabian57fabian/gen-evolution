@@ -11,6 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Cache Python Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -25,19 +33,19 @@ jobs:
         run: python evolve.py
 
       - name: Create Artifact app
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: app
           path: app.py
 
       - name: Create Artifact result
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: update_result
           path: update_result.txt
 
       - name: Create Artifact README
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: README
           path: README.md
