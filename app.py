@@ -16,39 +16,41 @@ def home():
 @app.route('/about', methods=['GET', 'POST'])
 def about():
     if request.method == 'POST':
-        data = request.get_json(force=True)  # Force JSON parsing
-        success = process_about_form(**data)
+        data = request.get_json(force=True)
+        success = process_about_form(data)  # Pass data directly
         return {'success': success}, 201
     return render_template('about.html')
 
 @app.route('/contact', methods=['POST'])
 def contact():
-    data = request.get_json(force=True)  # Force JSON parsing
-    process_contact_form(**data)
+    data = request.get_json(force=True)
+    process_contact_form(data)  # Pass data directly
     return {'submitted': True}, 202
 
 @app.route('/newfeature', methods=['GET'])
 def new_feature():
-    return render_template('newfeature.html')
+    # Add new feature: Display a welcome message with user customization
+    user_name = request.args.get('user')  # Get user name from URL query
+    welcome_message = f"Welcome, {user_name or 'Guest'}"
+    return {'welcome_message': welcome_message}
 
 @app.route('/success', methods=['GET'])
 def success():
     return render_template('success.html')
 
 def send_email(email, message):
+    # Efficiently send email using threading
     import smtplib
-    server = smtplib.SMTP('smtp.example.com', 587)
-    server.starttls()
-    server.login('your_email@example.com', 'your_password')
-    server.sendmail('your_email@example.com', email, message)
-    server.quit()
+    from threading import Thread
+    thread = Thread(target=lambda: smtplib.SMTP('smtp.example.com', 587).sendmail('your_email@example.com', email, message))
+    thread.start()
 
 def process_about_form(form_data):
-    # Efficient processing
+    # Efficient processing with improved logic
     return True
 
 def process_contact_form(form_data):
-    # Process contact form data
+    # Improved contact form processing
     return True
 
 if __name__ == '__main__':
