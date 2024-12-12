@@ -32,7 +32,9 @@ jobs:
 
       - name: Run LLM Script
         env:
-          COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
+          CO_API_KEY: ${{ secrets.CO_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python evolve.py
 
       - name: Create Artifact app

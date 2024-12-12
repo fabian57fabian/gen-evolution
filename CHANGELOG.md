@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - evolution paths
 - readme writeup
 - prompts
+- API KEYS env from secrets
 
 ### Changed
 
