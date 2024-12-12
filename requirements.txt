@@ -1,1 +1,3 @@
 cohere
+openai
+groq
