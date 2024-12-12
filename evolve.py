@@ -1,5 +1,6 @@
 import logging
 import os.path
+import random
 
 from src.utils import read_file, write_file, append_file, load_config, save_config, copy_files
 from src.llm.LLMFactory import LLMFactory, AbstractLLM
@@ -36,8 +37,11 @@ def init_changelog(changelog_fn: str):
 
 def evolve_once(llm: AbstractLLM, code_path: str, iteration_num: int, temperature: float):
     prompt_start = "Answer only with code, without extra formatting."
-    prompt_evolve = "Add a new feature, improve the following Python script for better efficiency"
-    prompt_evolve += " and write full resulting code:\n```python\n{script_content}\n```"
+    #prompt_start_idea = "Answer the question with interesting ideas, max 2 sentences."
+    #prompt_evolve_idea = "Based on following code, write a random idea number {random_num}"
+    #prompt_evolve_idea += " that will be fun to add as feature.\n```python\n{script_content}\n```"
+    prompt_evolve = "Add a new feature{feature_idea}, don't delete functions, improve the following Python script for better efficiency"
+    prompt_evolve += " and write full resulting code based on following script:\n```python\n{script_content}\n```"
     # prompt_requirements = "Now update the requirements.txt file. Current requirements looks like following"
     # prompt_requirements += ", and please answer only with the content of requirementx.txt file.\n{requirements}\n"
     prompt_summary = "Now write me a small description of the updates you have made in CHANGELOG format"
@@ -52,7 +56,18 @@ def evolve_once(llm: AbstractLLM, code_path: str, iteration_num: int, temperatur
     messages = [{"role": "system", "content": prompt_start}]
 
     script_content = read_file(code_path)
-    prompt = prompt_evolve.format(script_content=script_content)
+
+    feature_idea = ""
+    #if iteration_num % 2 == 0:
+    #    prompt = prompt_evolve_idea.format(script_content=script_content, random_num=random.randrange(1, 1000))
+    #    new_chat_message =[
+    #        {"role": "system", "content": prompt_start_idea},
+    #        {"role": "user", "content": prompt}
+    #    ]
+    #    feature_idea = llm.ask(new_chat_message, temperature)
+    #    feature_idea = f" ({feature_idea})"
+
+    prompt = prompt_evolve.format(script_content=script_content, feature_idea=feature_idea)
     messages.append({"role": "user", "content": prompt})
     improved_script = llm.ask(messages, temperature)
     messages.append({"role": "assistant", "content": improved_script})
@@ -80,7 +95,7 @@ def evolve_once(llm: AbstractLLM, code_path: str, iteration_num: int, temperatur
     changelog_fn = "CHANGELOG_EVOLUTION.md"
     if not os.path.exists(changelog_fn):
         init_changelog(changelog_fn)
-    append_file(changelog_fn, f"\n\n" + updates_summary)
+    append_file(changelog_fn, f"\n\nIdea:\n{feature_idea}\n\n{updates_summary}")
 
     readme_lines = read_file("README.md").split('\n')
 
@@ -135,10 +150,10 @@ def main() -> int:
 
         _dir = os.path.dirname(code_path)
 
-        _fld = os.path.join(_dir, "evolution_0")
         i = 0
+        _fld = os.path.join(_dir, f"evolution_{i:02d}")
         while os.path.exists(_fld):
-            _fld = os.path.join(_dir, f"evolution_{i:2d}")
+            _fld = os.path.join(_dir, f"evolution_{i:02d}")
             i += 1
         os.mkdir(_fld)
         evolution_path = os.path.join(_fld, filename)

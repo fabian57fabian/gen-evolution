@@ -16,12 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - main return_code
 - logging library
 - cached local config file and evolution folders
+- new idea feature (unused)
 
 ### Fixed
 
 - llm factory enum parsing
 - evolution paths
 - readme writeup
+- prompts
 
 ### Changed
 
