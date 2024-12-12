@@ -55,3 +55,14 @@ I have updated the provided Python script to include error handling and improve 
 These changes make the script more robust and user-friendly, providing clearer feedback to the client and ensuring that the necessary parameters are present in the requests.
 
 END:4
+
+START:5
+
+I have added a new feature to the existing Flask application to enhance its functionality and usability. 
+
+1. After Request Logging: I implemented an `@app.after_request` callback function named `log_request`. This function logs each incoming request's path, which can be helpful for debugging and monitoring purposes. This addition provides a convenient way to keep track of the requests hitting the server.
+2. Error Message Improvement: In the `/greet` endpoint, I enhanced the error response messages. Instead of a generic "400" error, the script now returns more descriptive error messages. For the GET method, if the "name" parameter is missing, it returns "Name parameter is missing." For the POST method, it checks if the "name" field is present in the JSON body, and if not, it returns "Name field is missing in the request body." 
+
+These improvements make the application more informative and easier to troubleshoot, enhancing the user experience and developer productivity. The logging feature, in particular, can be invaluable for understanding the flow of incoming requests and identifying potential issues.
+
+END:5

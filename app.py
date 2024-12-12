@@ -3,6 +3,12 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+# New feature: Log the requests for debugging
+@app.after_request
+def log_request(response):
+    print("Received request at:", response.request.path)
+    return response
+
 @app.route('/')
 def hello_world():
     return jsonify({'hello': 'world'})
@@ -21,7 +27,7 @@ def greet_post():
     if 'name' in data:
         return jsonify({'message': f'Hello, {data["name"]}!'}), 201
     else:
-        return jsonify({'error': 'Name field is missing'}), 400
+        return jsonify({'error': 'Name field is missing in the request body'}), 400
 
 if __name__ == '__main__':
     app.run()
