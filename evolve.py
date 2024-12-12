@@ -97,23 +97,25 @@ def evolve_once(llm: AbstractLLM, code_path: str, iteration_num: int, temperatur
         init_changelog(changelog_fn)
     append_file(changelog_fn, f"\n\nIdea:\n{feature_idea}\n\n{updates_summary}")
 
-    readme_lines = read_file("README.md").split('\n')
+    update_readme = False
+    if update_readme:
+        readme_lines = read_file("README.md").split('\n')
 
-    remove_index = None
-    for i, line in enumerate(readme_lines):
-        if line.startswith("## How it's going (auto updated)"):
-            remove_index = i + 1
-            break
+        remove_index = None
+        for i, line in enumerate(readme_lines):
+            if line.startswith("## How it's going (auto updated)"):
+                remove_index = i + 1
+                break
 
-    if remove_index is not None:
-        readme_lines = readme_lines[:remove_index]
+        if remove_index is not None:
+            readme_lines = readme_lines[:remove_index]
 
-    readme_lines.extend([
-        f"\n\nIteration {iteration_num}:\n\n",
-        updates_summary
-    ])
+        readme_lines.extend([
+            f"\n\nIteration {iteration_num}:\n\n",
+            updates_summary
+        ])
 
-    write_file("README.md", "\n".join(readme_lines))
+        write_file("README.md", "\n".join(readme_lines))
 
 
 def main() -> int:
