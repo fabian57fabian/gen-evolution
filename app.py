@@ -9,20 +9,22 @@ def home():
         name = request.form['name']
         email = request.form['email']
         message = request.form['message']
-        send_email(email, message)  # New feature: Send email
-        return {'message': f'Name: {name}, Email: {email}, Message: {message}', 'success': True}, 200  # HTTP Status: OK
+        send_email(email, message)
+        return {'message': f'Name: {name}, Email: {email}, Message: {message}', 'success': True}, 200
     return render_template('home.html')
 
 @app.route('/about', methods=['GET', 'POST'])
 def about():
     if request.method == 'POST':
-        data = {key: request.form[key] for key in request.form}  # Improve form data handling
-        return {'success': process_about_form(**data)}, 201
+        data = {key: request.form[key] for key in request.form}
+        success = process_about_form(**data)
+        return {'success': success}, 201
+    return render_template('about.html')
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
-        data = {key: request.form[key] for key in request.form}  # Improve form data handling
+        data = {key: request.form[key] for key in request.form}
         process_contact_form(**data)
         return {'submitted': True}, 202
 

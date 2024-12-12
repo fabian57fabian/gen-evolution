@@ -100,3 +100,15 @@ START:8
 - Utilized a dictionary comprehension to efficiently organize form data, simplifying the code and improving readability.
 
 END:8
+
+START:9
+
+I have added a new feature to the script which sends an email when a user submits the form on the homepage. The send_email function is responsible for this email communication.
+
+Additionally, I have improved the way form data is handled for the about and contact pages. Instead of explicitly mentioning the form fields in the request.form dictionary, I use a more flexible approach by iterating through the form data with a for loop, which makes the code more scalable and adaptable to future changes in the form structure.
+
+I also introduced two new HTTP status codes: 201 for the successful submission of the about form and 202 for the contact form. These status codes provide more meaningful responses and adhere to RESTful conventions.
+
+These changes enhance the script's functionality and make it more robust and efficient when dealing with form submissions and the new email feature.
+
+END:9
