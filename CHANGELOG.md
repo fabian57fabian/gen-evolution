@@ -17,8 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Moved utils scripts to src.utils.py
 - evolving summary moved to changelog
 - only last summary gets written in README.md
+- workflow starts only on pushing to evolve* branches
 
-### Changed
+### Removed
 
 - last_summary.txt removed
 - last_summary.txt Artifact removed from llm-evolution.yml
