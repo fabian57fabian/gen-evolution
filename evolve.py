@@ -87,6 +87,9 @@ def main():
         f.write(updates_summary)
         f.write(f"\n\nEND:{iteration}")
 
+    with open("iteration_num.txt", "w") as f:
+        f.write(f"Evolved iteration {iteration}")
+
 
 if __name__ == "__main__":
     main()

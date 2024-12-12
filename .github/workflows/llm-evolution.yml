@@ -50,8 +50,13 @@ jobs:
           name: README
           path: README.md
 
-      #- name: Add and Commit Changes
-      #  run: |
-      #    git add .
-      #    git commit -m "Updated script based on LLM output"
-      #    git push
+      - name: Access cloned repository content
+        run: |
+          git config --global user.email ${{ secrets.GIT_EMAIL }}
+          git config --global user.name ${{ secrets.GIT_USER }}
+          git add app.py README.md
+          git commit -F iteration_num.txt
+
+      - name: Push to Repository B
+        run: |
+          git push https://${{ secrets.PAT }}@github.com/${{ github.repository }}
