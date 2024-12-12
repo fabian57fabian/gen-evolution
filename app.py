@@ -16,16 +16,20 @@ def home():
 @app.route('/about', methods=['GET', 'POST'])
 def about():
     if request.method == 'POST':
-        data = request.get_json()  # Get JSON data
+        data = request.get_json(force=True)  # Force JSON parsing
         success = process_about_form(**data)
         return {'success': success}, 201
     return render_template('about.html')
 
 @app.route('/contact', methods=['POST'])
 def contact():
-    data = request.get_json()  # Get JSON data
+    data = request.get_json(force=True)  # Force JSON parsing
     process_contact_form(**data)
     return {'submitted': True}, 202
+
+@app.route('/newfeature', methods=['GET'])
+def new_feature():
+    return render_template('newfeature.html')
 
 @app.route('/success', methods=['GET'])
 def success():
