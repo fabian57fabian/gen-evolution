@@ -1,0 +1,47 @@
+name: LLM Evolution
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  llm-evolution:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run LLM Script
+        run: python llm_script.py
+
+      - name: Create Artifact app
+        uses: actions/upload-artifact@v3
+        with:
+          name: app
+          path: app.py
+
+      - name: Create Artifact result
+        uses: actions/upload-artifact@v3
+        with:
+          name: update_result
+          path: update_result.txt
+
+      - name: Create Artifact README
+        uses: actions/upload-artifact@v3
+        with:
+          name: README
+          path: README.md
+
+      #- name: Add and Commit Changes
+      #  run: |
+      #    git add .
+      #    git commit -m "Updated script based on LLM output"
+      #    git push
