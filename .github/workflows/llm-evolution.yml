@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 jobs:
-  llm-evolution:
+  evolve:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +20,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run LLM Script
-        run: python llm_script.py
+        run: python evolve.py
 
       - name: Create Artifact app
         uses: actions/upload-artifact@v3
