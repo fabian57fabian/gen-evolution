@@ -134,10 +134,16 @@ def main() -> int:
         filename = os.path.basename(code_path)
 
         _dir = os.path.dirname(code_path)
-        _fld = os.path.join(_dir, "evolution")
+
+        _fld = os.path.join(_dir, "evolution_0")
+        i = 0
+        while os.path.exists(_fld):
+            _fld = os.path.join(_dir, f"evolution_{i:2d}")
+            i += 1
         os.mkdir(_fld)
         evolution_path = os.path.join(_fld, filename)
         copy_files(code_path, evolution_path)
+        copy_files("config.json", os.path.join(_fld, "config.json"))
         config["evolution_path"] = evolution_path
 
     # Start config
