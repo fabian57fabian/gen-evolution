@@ -4,7 +4,7 @@ import cohere
 
 def generate_prompt(script_content):
     # Generate a prompt based on the current script content
-    prompt = f"Add a new feature and improve the following Python script for better efficiency:\n```python\n{script_content}\n```"
+    prompt = f"Add a new feature, improve the following Python script for better efficiency and write full resulting code:\n```python\n{script_content}\n```"
     return prompt
 
 
