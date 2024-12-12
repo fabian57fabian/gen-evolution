@@ -16,18 +16,19 @@ def home():
 @app.route('/about', methods=['POST'])
 def about():
     data = request.get_json(force=True)
-    success = process_about_page_data(data)
+    success = process_data(data, 'about')
     return {'success': success}, 201
 
 @app.route('/contact', methods=['POST'])
 def contact():
-    data = process_contact_form(request.get_json(force=True))
-    return {'submitted': data['submitted']}, 202
+    data = request.get_json(force=True)
+    success = process_data(data, 'contact')
+    return {'submitted': success}, 202
 
 @app.route('/newfeature', methods=['GET'])
 def new_feature():
     user_name = request.args.get('user')
-    message = get_welcome_message(user_name)
+    message = get_message(user_name)
     return {'welcome_message': message}
 
 @app.route('/success', methods=['GET'])
@@ -38,21 +39,20 @@ def send_email(email, message):
     # Logic to send email
     pass
 
-def process_about_page_data(data):
-    # Process about page data efficiently
-    pass
+def process_data(data, page):
+    # Efficiently process data based on the page
+    if page == 'about':
+        # Process about page data
+        pass
+    elif page == 'contact':
+        # Validate contact page data
+        return all(key in data for key in ['name', 'email', 'message'])
+    return False
 
-def process_contact_form(json_data):
-    # Validate and process contact form data
-    data = {'submitted': False}
-    if all(key in json_data for key in ['name', 'email', 'message']):
-        data['submitted'] = True
-    return data
-
-def get_welcome_message(user_name):
+def get_message(user_name):
     if user_name:
-        return f"Hello, {user_name}! Welcome to our new feature."
-    return "Explore our exciting new feature!"
+        return f"Hello, {user_name}! Welcome to the new feature."
+    return "Explore our new feature!"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5001, debug=True)
