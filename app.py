@@ -6,9 +6,9 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        message = request.form['message']
+        name = request.form.get('name')
+        email = request.form.get('email')
+        message = request.form.get('message')
         if not all([name, email, message]):
             return {'error': 'All fields are required.', 'success': False}, 400
         send_email(email, message)
@@ -18,9 +18,11 @@ def home():
 @app.route('/about', methods=['POST'])
 def about():
     data = request.json
-    if not all(key in data for key in ['key1', 'key2']):  # Replace 'key1' and 'key2' with actual keys
-        return {'error': 'Missing data keys.', 'success': False}, 400
-    success = process_data(data)  # Improved data processing function
+    keys = ['key1', 'key2']  # Define the required keys
+    for key in keys:
+        if key not in data:
+            return {'error': f'Missing {key} key.', 'success': False}, 400
+    success = process_data(data)
     if success:
         return {'success': True}, 201
     else:
@@ -30,18 +32,22 @@ def about():
 def contact():
     data = request.json
     required_fields = ['name', 'email', 'message']
-    if not all(field in data for field in required_fields):
-        return {'error': 'Missing fields.', 'submitted': False}, 400
-    if not all([data[field] for field in required_fields]):  # Check if all fields are filled
-        return {'error': 'Please fill in all fields.', 'submitted': False}, 400
-    success = validate_data(data)  # Improved validation function
+    missing_fields = [field for field in required_fields if field not in data]
+    if missing_fields:
+        return {'error': f'Missing fields: {", ".join(missing_fields)}', 'submitted': False}, 400
+    
+    for field in required_fields:
+        if not data[field]:
+            return {'error': f'Please fill in the {field} field.', 'submitted': False}, 400
+    
+    success = validate_data(data)
     return {'submitted': success}, 202
 
 @app.route('/newfeature', methods=['GET'])
 def new_feature():
     user = request.args.get('user')
     message = get_message(user)
-    return {'message': message}
+    return {'message': message}, 200
 
 @app.route('/success', methods=['GET'])
 def success():
@@ -59,7 +65,7 @@ def validate_data(data):
     # Improved validation logic
     return True
 
-def get_message(user):
+def get_message(user=None):
     if user:
         return f"Hello, {user}! Welcome to the new feature."
     return "Explore the new feature!"
