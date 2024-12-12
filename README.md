@@ -112,3 +112,13 @@ I also introduced two new HTTP status codes: 201 for the successful submission o
 These changes enhance the script's functionality and make it more robust and efficient when dealing with form submissions and the new email feature.
 
 END:9
+
+START:10
+
+```
+- Updated the `/about` and `/contact` routes to accept JSON data instead of form data. This enhances flexibility and security by allowing more structured and controlled data submission.
+- Removed the explicit key-value pairing for form data in the `/about` route, instead utilizing the `request.get_json()` method, which simplifies the data retrieval process.
+- Changed the `/contact` route to exclusively accept POST requests for improved security and clarity.
+```
+
+END:10

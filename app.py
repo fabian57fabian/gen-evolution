@@ -16,17 +16,16 @@ def home():
 @app.route('/about', methods=['GET', 'POST'])
 def about():
     if request.method == 'POST':
-        data = {key: request.form[key] for key in request.form}
+        data = request.get_json()  # Get JSON data
         success = process_about_form(**data)
         return {'success': success}, 201
     return render_template('about.html')
 
-@app.route('/contact', methods=['GET', 'POST'])
+@app.route('/contact', methods=['POST'])
 def contact():
-    if request.method == 'POST':
-        data = {key: request.form[key] for key in request.form}
-        process_contact_form(**data)
-        return {'submitted': True}, 202
+    data = request.get_json()  # Get JSON data
+    process_contact_form(**data)
+    return {'submitted': True}, 202
 
 @app.route('/success', methods=['GET'])
 def success():
