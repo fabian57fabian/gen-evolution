@@ -16,6 +16,6 @@ yes.
 
 START:1
 
-First basic Flask environment
+First app.py Flask environment
 
 END:1
