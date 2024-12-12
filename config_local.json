@@ -1,0 +1,9 @@
+{
+  "code_path": "evolutions/python/flask_app/app.py",
+  "llm": "cohere",
+  "model": "",
+  "temperature": 0.5,
+  "iteration": 2,
+  "max": 4,
+  "evolution_path": "evolutions/python/flask_app/evolution_00/app.py"
+}
