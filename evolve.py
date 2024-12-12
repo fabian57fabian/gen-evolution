@@ -76,6 +76,17 @@ def main():
     with open("update_result.txt", "w") as f:
         f.write(updates_summary)
 
+    with open("README.md", "r") as f:
+       readme = f.readlines()
+
+    last_iteration = int(readme[-1].split(':')[-1])
+    iteration = last_iteration + 1
+
+    with open("README.md", "a") as f:
+        f.write(f"\n\nSTART:{iteration}\n\n")
+        f.write(updates_summary)
+        f.write(f"\n\nEND:{iteration}")
+
 
 if __name__ == "__main__":
     main()
